@@ -5,11 +5,13 @@ import sentiment_analysis
 import music_recommendation
 import os
 
-
 load_dotenv()
 
-# Initialize bot
-bot = commands.Bot(command_prefix="!")
+# Initialize bot with intents
+intents = discord.Intents.default()
+intents.message_content = True
+
+bot = commands.Bot(command_prefix="!", intents=intents)
 
 
 @bot.event
@@ -19,8 +21,8 @@ async def on_ready():
 
 @bot.command()
 async def sentiment(ctx, *, text: str):
-    sentiment = sentiment_analysis.analyze(text)
-    await ctx.send(f"Sentiment: {sentiment}")
+    analyzed_sentiment = sentiment_analysis.analyze(text)
+    await ctx.send(f"Sentiment: {analyzed_sentiment}")
 
 
 @bot.command()
